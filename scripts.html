@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECAX Community | Scripts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .title-frame {
+            width: 100%;
+            border: 2px solid red;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: black;
+            margin-bottom: 20px;
+        }
+        .button-frame {
+            width: 100%;
+            border: 2px solid red;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: black;
+            margin-bottom: 20px;
+        }
+        .script-list-frame {
+            width: 100%;
+            border: 2px solid red;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: black;
+            height: calc(100vh - 180px); /* Adjust height based on title and other elements */
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        .script-item {
+            padding: 10px;
+            border: 1px solid red;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            background-color: black;
+            color: white;
+        }
+        .script-item:hover {
+            background-color: #333;
+        }
+        .upload-button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid red;
+            border-radius: 10px;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .upload-button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="title-frame">
+        <h1>ECAX Community | Scripts</h1>
+    </div>
+
+    <div class="button-frame">
+        <button class="upload-button" onclick="window.location.href='upload">Upload Scripts</button>
+    </div>
+
+    <div class="script-list-frame" id="scriptList">
+        <!-- Script items will be dynamically inserted here -->
+    </div>
+</body>
+</html>
