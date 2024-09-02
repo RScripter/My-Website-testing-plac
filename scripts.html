@@ -14,15 +14,15 @@
             padding: 20px;
         }
         .title-frame {
-            width: 90%;
+            width: 100%;
             border: 2px solid red;
             border-radius: 10px;
             padding: 20px;
             background-color: black;
             margin-bottom: 20px;
         }
-        .button-frame {
-            width: 90%;
+        .upload-frame {
+            width: 100%;
             border: 2px solid red;
             border-radius: 10px;
             padding: 20px;
@@ -47,11 +47,21 @@
             cursor: pointer;
             background-color: black;
             color: white;
-        }l
+        }
         .script-item:hover {
             background-color: #333;
         }
-        .upload-button {
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid red;
+            border-radius: 10px;
+            background-color: black;
+            color: white;
+            margin-top: 10px;
+        }
+        button {
             width: 100%;
             padding: 10px;
             font-size: 16px;
@@ -59,10 +69,10 @@
             border-radius: 10px;
             background-color: black;
             color: white;
+            margin-top: 10px;
             cursor: pointer;
-            margin-bottom: 20px;
         }
-        .upload-button:hover {
+        button:hover {
             background-color: #333;
         }
     </style>
@@ -72,12 +82,79 @@
         <h1>ECAX Community | Scripts</h1>
     </div>
 
-    <div class="button-frame">
-        <button class="upload-button" onclick="window.location.href='upload.html'">Upload Scripts</button>
+    <!-- Upload Script Section -->
+    <div class="upload-frame">
+        <h2>Upload Your Script</h2>
+        <div class="input-container">
+            <input type="text" id="titleInput" placeholder="Script Title">
+            <input type="text" id="scriptInput" placeholder="Script Here">
+            <button onclick="addScript()">Upload</button>
+        </div>
     </div>
 
+    <!-- Script List Section -->
     <div class="script-list-frame" id="scriptList">
         <!-- Script items will be dynamically inserted here -->
     </div>
+
+    <script>
+        function addScript() {
+            const title = document.getElementById('titleInput').value;
+            const script = document.getElementById('scriptInput').value;
+
+            if (title && script) {
+                const scriptList = document.getElementById('scriptList');
+
+                const newScript = document.createElement('div');
+                newScript.className = 'script-item';
+                newScript.textContent = title;
+                newScript.onclick = function() {
+                    loadScriptDetails(title, script);
+                };
+
+                // Add the new script to the script list
+                scriptList.appendChild(newScript);
+
+                // Clear the input fields after adding the script
+                document.getElementById('titleInput').value = '';
+                document.getElementById('scriptInput').value = '';
+
+                // Optionally save to localStorage
+                saveScriptToLocal(title, script);
+            } else {
+                alert('Please provide both a title and the script.');
+            }
+        }
+
+        function loadScriptDetails(title, scriptContent) {
+            // Display the script details
+            alert(`Title: ${title}\nScript: ${scriptContent}`);
+        }
+
+        function saveScriptToLocal(title, script) {
+            // Save the script to localStorage for persistence
+            let scripts = JSON.parse(localStorage.getItem('scripts')) || [];
+            scripts.push({ title, script });
+            localStorage.setItem('scripts', JSON.stringify(scripts));
+        }
+
+        function loadScriptsFromLocal() {
+            let scripts = JSON.parse(localStorage.getItem('scripts')) || [];
+            const scriptList = document.getElementById('scriptList');
+            scripts.forEach(({ title, script }) => {
+                const newScript = document.createElement('div');
+                newScript.className = 'script-item';
+                newScript.textContent = title;
+                newScript.onclick = function() {
+                    loadScriptDetails(title, script);
+                };
+                scriptList.appendChild(newScript);
+            });
+        }
+
+        // Load scripts from localStorage when the page loads
+        window.onload = loadScriptsFromLocal;
+    </script>
+
 </body>
 </html>
