@@ -14,7 +14,7 @@
             padding: 20px;
         }
         .title-frame {
-            width: 100%;
+            width: 90%;
             border: 2px solid red;
             border-radius: 10px;
             padding: 20px;
@@ -22,7 +22,7 @@
             margin-bottom: 20px;
         }
         .upload-frame {
-            width: 100%;
+            width: 90%;
             border: 2px solid red;
             border-radius: 10px;
             padding: 20px;
@@ -38,6 +38,7 @@
             height: calc(100vh - 180px); /* Adjust height based on title and other elements */
             overflow-y: auto;
             box-sizing: border-box;
+            position: relative;
         }
         .script-item {
             padding: 10px;
@@ -75,6 +76,16 @@
         button:hover {
             background-color: #333;
         }
+        .search-box {
+            width: calc(100% - 40px); /* Adjust width based on padding */
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid red;
+            border-radius: 10px;
+            background-color: black;
+            color: white;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -93,8 +104,11 @@
     </div>
 
     <!-- Script List Section -->
-    <div class="script-list-frame" id="scriptList">
-        <!-- Script items will be dynamically inserted here -->
+    <div class="script-list-frame">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search Scripts" oninput="filterScripts()">
+        <div id="scriptList">
+            <!-- Script items will be dynamically inserted here -->
+        </div>
     </div>
 
     <script>
@@ -109,7 +123,7 @@
                 newScript.className = 'script-item';
                 newScript.textContent = title;
                 newScript.onclick = function() {
-                    loadScriptDetails(title, script);
+                    goToScriptDetails(title, script);
                 };
 
                 // Add the new script to the script list
@@ -126,9 +140,13 @@
             }
         }
 
-        function loadScriptDetails(title, scriptContent) {
-            // Display the script details
-            alert(`Title: ${title}\nScript: ${scriptContent}`);
+        function goToScriptDetails(title, scriptContent) {
+            // Save the script details to localStorage
+            localStorage.setItem('currentScriptTitle', title);
+            localStorage.setItem('currentScriptContent', scriptContent);
+
+            // Redirect to script-details.html
+            window.location.href = 'script-details.html';
         }
 
         function saveScriptToLocal(title, script) {
@@ -146,9 +164,22 @@
                 newScript.className = 'script-item';
                 newScript.textContent = title;
                 newScript.onclick = function() {
-                    loadScriptDetails(title, script);
+                    goToScriptDetails(title, script);
                 };
                 scriptList.appendChild(newScript);
+            });
+        }
+
+        function filterScripts() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const scriptItems = document.getElementsByClassName('script-item');
+            Array.from(scriptItems).forEach((item) => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(searchInput)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
             });
         }
 
